@@ -125,10 +125,8 @@ tls://dns.google
 
 
 [/hethongphimlau111.com/]8.8.8.8
-[/^opstream[0-9]+\.com$/]8.8.8.8
+[/opstream*.com/]8.8.8.8
 [/opstream1.com/]8.8.8.8
 [/opstream2.com/]8.8.8.8
 [/opstream3.com/]8.8.8.8
-[/opstream1.com/]8.8.8.8
-[/opstream2.com/]8.8.8.8
-[/opstream3.com/]8.8.8.8
+
