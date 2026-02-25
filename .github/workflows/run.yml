@@ -1,22 +1,50 @@
-- name: Lưu file vào Repo
+name: Auto Process DNS
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 */6 * * *'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout mã nguồn
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Quan trọng để rebase không lỗi
+
+      - name: Cài đặt Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Cài đặt thư viện
+        run: pip install requests
+
+      - name: Chạy script xử lý
+        run: python z_code_process_dns.py
+
+      - name: Lưu file vào Repo
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           
-          # 1. Thêm file vào vùng chờ (stage)
+          # Kiểm tra xem có thay đổi ở file dns_VN.txt không
           git add dns_VN.txt
           
-          # 2. Kiểm tra xem có gì mới không để tránh commit rác
           if git diff --staged --quiet; then
-            echo "Không có thay đổi nào để cập nhật."
+            echo "Khong co thay doi nao moi."
           else
-            # 3. Commit thay đổi nội bộ
+            # 1. Commit thay doi vao may ao truoc
             git commit -m "Cập nhật list DNS: $(date +'%d-%m-%Y %H:%M')"
             
-            # 4. QUAN TRỌNG: Kéo dữ liệu mới nhất từ server về và đặt commit của Action lên trên đầu
-            # Việc dùng --rebase giúp lịch sử Git sạch hơn và tránh lỗi 'rejected'
+            # 2. Keo du lieu moi nhat tu Github ve (tranh loi rejected)
             git pull origin main --rebase
             
-            # 5. Đẩy lên lại
+            # 3. Day du lieu len
             git push origin main
           fi
