@@ -1,33 +1,35 @@
-import requests
+import socket
 
-SOURCE_URL = "https://raw.githubusercontent.com/ChangeGod/listIPforRouter/refs/heads/main/FWVietNam"
+# Danh sách domain bạn muốn lấy IP
+domains = [
+    "testhethong111.com",
+    "dnsleaktest.com",
+    "ipleak.net",
+    "tuoitre.vn"
+]
 
 def main():
-    try:
-        # Thêm headers để tránh bị chặn hoặc trả về rỗng
-        headers = {'User-Agent': 'Mozilla/5.0'}
-        print(f"Đang tải dữ liệu từ {SOURCE_URL}...")
-        
-        response = requests.get(SOURCE_URL, headers=headers)
-        response.raise_for_status() 
-        
-        # Kiểm tra nội dung có thực sự tồn tại không
-        content = response.text.strip()
-        if not content:
-            print("Cảnh báo: Dữ liệu tải về trống rỗng!")
-            return
+    ip_list = []
+    print("Đang bắt đầu phân giải IP...")
+    
+    for domain in domains:
+        try:
+            # Lấy địa chỉ IPv4 từ domain
+            ip = socket.gethostbyname(domain.strip())
+            ip_list.append(f"{domain}: {ip}")
+            print(f"Thành công: {domain} -> {ip}")
+        except socket.gaierror:
+            # Trường hợp domain không tồn tại hoặc lỗi kết nối
+            print(f"Lỗi: Không thể tìm thấy IP cho {domain}")
+        except Exception as e:
+            print(f"Lỗi không xác định với {domain}: {e}")
 
-        dns_list = [line.strip() for line in content.splitlines() if line.strip()]
-        
-        # Ghi file (Đảm bảo tên file khớp với YAML)
-        with open("dns_VN.txt", "w", encoding="utf-8") as f:
-            for dns in dns_list:
-                f.write(f"{dns}\n")
-        
-        print(f"Thành công! Đã lưu {len(dns_list)} dòng vào dns_VN.txt")
-    except Exception as e:
-        print(f"Lỗi: {e}")
-        exit(1)
+    # Ghi kết quả vào file dns_VN.txt
+    with open("dns_VN.txt", "w", encoding="utf-8") as f:
+        for entry in ip_list:
+            f.write(f"{entry}\n")
+    
+    print(f"\nĐã lưu {len(ip_list)} địa chỉ IP vào file dns_VN.txt")
 
 if __name__ == "__main__":
     main()
