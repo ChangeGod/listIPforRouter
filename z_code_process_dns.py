@@ -10,35 +10,35 @@ def main():
         response = requests.get(SOURCE_URL, headers=headers, timeout=15)
         response.raise_for_status()
         
-        # Lọc bỏ dòng trống và dòng comment nếu có
         domains = [line.strip() for line in response.text.splitlines() if line.strip() and not line.startswith('#')]
         
-        ip_results = []
-        print(f"Tìm thấy {len(domains)} domain. Đang bắt đầu phân giải...")
+        # Sử dụng dictionary để lưu {IP: Domain} nhằm tránh trùng lặp IP nhưng vẫn giữ được chú thích
+        ip_map = {}
+        print(f"Tìm thấy {len(domains)} domain. Đang xử lý...")
 
         # 2. Chuyển domain thành IP
         for domain in domains:
             try:
-                # Lấy IP (chỉ lấy IPv4)
                 ip = socket.gethostbyname(domain)
-                ip_results.append(ip)
+                # Nếu IP đã tồn tại, có thể cộng dồn domain vào chú thích (tùy chọn)
+                if ip in ip_map:
+                    if domain not in ip_map[ip]:
+                        ip_map[ip] += f", {domain}"
+                else:
+                    ip_map[ip] = domain
                 print(f"Thành công: {domain} -> {ip}")
-            except Exception:
-                # Bỏ qua các domain lỗi hoặc không tồn tại
-                continue
+            except:
+                continue 
 
-        # 3. Loại bỏ trùng lặp và sắp xếp
-        final_ips = sorted(list(set(ip_results)))
-        
-        # Ghi file
+        # 3. Sắp xếp và ghi file theo định dạng: IP # Domain
         with open("dns_VN.txt", "w", encoding="utf-8") as f:
-            for ip in final_ips:
-                f.write(f"{ip}\n")
+            for ip in sorted(ip_map.keys()):
+                f.write(f"{ip} # {ip_map[ip]}\n")
         
-        print(f"Hoàn thành! Đã lưu {len(final_ips)} IP vào dns_VN.txt")
+        print(f"Xong! Đã lưu {len(ip_map)} IP kèm chú thích vào dns_VN.txt")
 
     except Exception as e:
-        print(f"Lỗi hệ thống: {e}")
+        print(f"Lỗi: {e}")
 
 if __name__ == "__main__":
     main()
