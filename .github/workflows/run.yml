@@ -3,7 +3,7 @@ name: Auto Process DNS
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 */1 * * *'
+    - cron: '0 */6 * * *'
 
 jobs:
   build:
@@ -15,7 +15,7 @@ jobs:
       - name: Checkout mã nguồn
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0 # Quan trọng để rebase không lỗi
+          fetch-depth: 0
 
       - name: Cài đặt Python
         uses: actions/setup-python@v4
@@ -33,18 +33,13 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           
-          # Kiểm tra xem có thay đổi ở file dns_VN.txt không
           git add dns_VN.txt
           
           if git diff --staged --quiet; then
-            echo "Khong co thay doi nao moi."
+            echo "Không có thay đổi."
           else
-            # 1. Commit thay doi vao may ao truoc
-            git commit -m "Cập nhật list DNS: $(date +'%d-%m-%Y %H:%M')"
-            
-            # 2. Keo du lieu moi nhat tu Github ve (tranh loi rejected)
+            # Fix lỗi rejected bằng commit -> pull rebase -> push
+            git commit -m "Cập nhật list DNS kèm chú thích: $(date +'%d-%m-%Y %H:%M')"
             git pull origin main --rebase
-            
-            # 3. Day du lieu len
             git push origin main
           fi
