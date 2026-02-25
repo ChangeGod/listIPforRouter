@@ -33,18 +33,18 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
 
-          # Thêm file vào stage trước
+          # Thêm file vào vùng chờ
           git add dns_VN.txt
 
-          # Chỉ xử lý nếu có sự thay đổi
+          # Kiểm tra xem thực sự có thay đổi nội dung không
           if git diff --staged --quiet; then
-            echo "Không có thay đổi nào mới."
+            echo "Không có thay đổi nào để cập nhật."
           else
-            # Commit thay đổi
             git commit -m "Cập nhật list DNS: $(date +'%d-%m-%Y %H:%M')"
             
-            # Kéo và đẩy dữ liệu một cách an toàn
-            # Sử dụng --rebase và chỉ định rõ nhánh để tránh lỗi ambiguous
-            git pull --rebase origin main
-            git push origin main
+            # Kéo dữ liệu mới nhất về trước để tránh xung đột
+            git pull origin main --rebase
+            
+            # Đẩy lên nhánh main một cách tường minh
+            git push origin HEAD:main
           fi
