@@ -1,13 +1,21 @@
 name: Auto Process DNS
+
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '0 */6 * * *' # Tự động chạy mỗi 6 tiếng (tùy chọn)
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # Cấp quyền ghi để push được file
+
     steps:
       - name: Checkout mã nguồn
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Lấy toàn bộ lịch sử để rebase không lỗi
 
       - name: Cài đặt Python
         uses: actions/setup-python@v4
@@ -22,18 +30,24 @@ jobs:
 
       - name: Lưu file vào Repo
         run: |
-      - name: Lưu file vào Repo
-        run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           
-          # Tải thay đổi mới nhất về để tránh xung đột
-          git pull origin main --rebase
-          
+          # Tạm thời cất file dns_VN.txt vừa tạo để pull không bị xung đột
           git add dns_VN.txt
-          git commit -m "Cập nhật list DNS" || echo "No changes"
+          git stash
           
-          # Đẩy code lên
-          git push origin main
+          # Cập nhật dữ liệu mới nhất từ GitHub
           git pull origin main --rebase
-          git push origin main
+          
+          # Lấy lại file dns_VN.txt
+          git stash pop || echo "No stashed changes"
+          
+          # Kiểm tra xem có thay đổi thực sự không trước khi commit
+          git add dns_VN.txt
+          if git diff --staged --quiet; then
+            echo "Không có thay đổi nào mới."
+          else
+            git commit -m "Cập nhật list DNS: $(date +'%d-%m-%Y %H:%M')"
+            git push origin main
+          fi
