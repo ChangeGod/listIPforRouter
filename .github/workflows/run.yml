@@ -18,12 +18,12 @@ jobs:
         run: pip install requests
 
       - name: Chạy script xử lý
-        run: python process_dns.py
+        run: z_code_process_dns.py
 
       - name: Lưu file vào Repo
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add dns_VN_test.txt
+          git add dns_VN.txt
           git commit -m "Cập nhật list DNS" || echo "No changes"
           git push
