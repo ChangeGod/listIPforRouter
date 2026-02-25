@@ -1,44 +1,32 @@
 import requests
-import socket
 
-# Link chứa danh sách Domain của bạn
-SOURCE_URL = "https://raw.githubusercontent.com"
-
-def get_ip(domain):
-    try:
-        # Thực hiện phân giải tên miền sang IP
-        return socket.gethostbyname(domain.strip())
-    except:
-        return None
+SOURCE_URL = "https://raw.githubusercontent.com/ChangeGod/listIPforRouter/refs/heads/main/FWVietNam"
 
 def main():
     try:
-        print(f"Đang tải danh sách domain từ {SOURCE_URL}...")
-        response = requests.get(SOURCE_URL)
-        response.raise_for_status()
+        # Thêm headers để tránh bị chặn hoặc trả về rỗng
+        headers = {'User-Agent': 'Mozilla/5.0'}
+        print(f"Đang tải dữ liệu từ {SOURCE_URL}...")
         
-        domains = [line.strip() for line in response.text.splitlines() if line.strip()]
-        ip_list = []
+        response = requests.get(SOURCE_URL, headers=headers)
+        response.raise_for_status() 
+        
+        # Kiểm tra nội dung có thực sự tồn tại không
+        content = response.text.strip()
+        if not content:
+            print("Cảnh báo: Dữ liệu tải về trống rỗng!")
+            return
 
-        print(f"Đang phân giải {len(domains)} tên miền...")
-        for domain in domains:
-            ip = get_ip(domain)
-            if ip:
-                ip_list.append(ip)
-                print(f"Thành công: {domain} -> {ip}")
-            else:
-                print(f"Thất bại: Không thể tìm IP cho {domain}")
-
-        # Loại bỏ các IP trùng lặp
-        unique_ips = sorted(list(set(ip_list)))
-
+        dns_list = [line.strip() for line in content.splitlines() if line.strip()]
+        
+        # Ghi file (Đảm bảo tên file khớp với YAML)
         with open("dns_VN.txt", "w", encoding="utf-8") as f:
-            for ip in unique_ips:
-                f.write(f"{ip}\n")
+            for dns in dns_list:
+                f.write(f"{dns}\n")
         
-        print(f"Hoàn thành! Đã lưu {len(unique_ips)} IP vào dns_VN.txt")
+        print(f"Thành công! Đã lưu {len(dns_list)} dòng vào dns_VN.txt")
     except Exception as e:
-        print(f"Lỗi hệ thống: {e}")
+        print(f"Lỗi: {e}")
         exit(1)
 
 if __name__ == "__main__":
