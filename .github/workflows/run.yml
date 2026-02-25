@@ -15,7 +15,7 @@ jobs:
       - name: Checkout mã nguồn
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          ref: main # Rất quan trọng: Ép tải thẳng nhánh main
 
       - name: Cài đặt Python
         uses: actions/setup-python@v5
@@ -26,25 +26,18 @@ jobs:
         run: pip install requests
 
       - name: Chạy script xử lý
-        # Đảm bảo tên file python ở đây khớp với tên file của bạn trong repo
         run: python z_code_process_dns.py
 
       - name: Lưu file vào Repo
         run: |
-          # 1. Sử dụng danh tính chuẩn của GitHub Actions Bot (Best Practice)
-          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-
-          # 2. Thêm file mới tạo vào staging
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
           git add dns_VN.txt
           
-          # 3. Kiểm tra thay đổi, nếu có thì commit và push
           if git diff --staged --quiet; then
             echo "Không có thay đổi nào mới."
           else
-            git commit -m "Cập nhật IP: $(date +'%d-%m-%Y %H:%M')"
-            
-            # 4. Dùng cú pháp đẩy thẳng commit hiện tại (HEAD) lên nhánh main của origin
-            # Cú pháp này miễn nhiễm với lỗi "detached HEAD"
-            git push origin HEAD:main
+            # Thêm múi giờ VN để commit log chuẩn xác
+            TZ='Asia/Ho_Chi_Minh' git commit -m "Cập nhật IP: $(TZ='Asia/Ho_Chi_Minh' date +'%d-%m-%Y %H:%M')"
+            git push origin main
           fi
