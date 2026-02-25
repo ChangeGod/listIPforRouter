@@ -1,0 +1,26 @@
+name: Auto Process DNS
+on:
+  workflow_dispatch: # Cho phép bạn bấm nút chạy thủ công
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout mã nguồn
+        uses: [actions/checkout](https://github.com)@v3
+
+      - name: Cài đặt Python và thư viện
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
+
+      - name: Chạy script xử lý
+        run: python process_dns.py
+
+      - name: Lưu file vào Repo
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add dns_VN.txt
+          git commit -m "Cập nhật list DNS mới" || echo "Không có thay đổi"
+          git push
