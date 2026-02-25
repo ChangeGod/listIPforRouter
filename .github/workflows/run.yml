@@ -26,8 +26,14 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
+          
+          # Tải thay đổi mới nhất về để tránh xung đột
+          git pull origin main --rebase
+          
           git add dns_VN.txt
           git commit -m "Cập nhật list DNS" || echo "No changes"
-          # Thêm pull để đồng bộ dữ liệu trước khi push
+          
+          # Đẩy code lên
+          git push origin main
           git pull origin main --rebase
           git push origin main
