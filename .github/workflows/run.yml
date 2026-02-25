@@ -1,45 +1,24 @@
-name: Auto Process DNS
-
-on:
-  workflow_dispatch:
-  schedule:
-    - cron: '0 */6 * * *'
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-
-    steps:
-      - name: Checkout mã nguồn
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-
-      - name: Cài đặt Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.10'
-
-      - name: Cài đặt thư viện
-        run: pip install requests
-
-      - name: Chạy script xử lý
-        run: python z_code_process_dns.py
-
-      - name: Lưu file vào Repo
+- name: Lưu file vào Repo
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          
+
+          # 1. Tải trạng thái mới nhất từ server nhưng chưa áp dụng vào file
+          git fetch origin main
+
+          # 2. Đồng bộ hóa lịch sử git với server (nhưng giữ nguyên file dns_VN.txt vừa tạo)
+          git reset --soft origin main
+
+          # 3. Ép Git nhận file dns_VN.txt mới nhất vừa tạo từ script Python
           git add dns_VN.txt
-          
+
+          # 4. Kiểm tra thay đổi
           if git diff --staged --quiet; then
-            echo "Không có thay đổi."
+            echo "Không có thay đổi nào mới."
           else
-            # Fix lỗi rejected bằng commit -> pull rebase -> push
             git commit -m "Cập nhật list DNS kèm chú thích: $(date +'%d-%m-%Y %H:%M')"
-            git pull origin main --rebase
+            
+            # 5. Push thẳng lên (Force push không được khuyến khích nhưng ở đây 
+            # chúng ta dùng cách an toàn hơn là reset soft phía trên)
             git push origin main
           fi
