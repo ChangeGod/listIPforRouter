@@ -7,28 +7,30 @@ def main():
     try:
         # 1. Tải danh sách domain
         headers = {'User-Agent': 'Mozilla/5.0'}
-        response = requests.get(SOURCE_URL, headers=headers, timeout=10)
+        response = requests.get(SOURCE_URL, headers=headers, timeout=15)
         response.raise_for_status()
         
-        domains = [line.strip() for line in response.text.splitlines() if line.strip()]
+        # Lọc bỏ dòng trống và dòng comment nếu có
+        domains = [line.strip() for line in response.text.splitlines() if line.strip() and not line.startswith('#')]
         
         ip_results = []
-        print(f"Tìm thấy {len(domains)} domain. Đang lấy IP...")
+        print(f"Tìm thấy {len(domains)} domain. Đang bắt đầu phân giải...")
 
         # 2. Chuyển domain thành IP
         for domain in domains:
             try:
-                # Chỉ lấy IP (không kèm tên domain) để nạp vào Router
+                # Lấy IP (chỉ lấy IPv4)
                 ip = socket.gethostbyname(domain)
                 ip_results.append(ip)
-                print(f"OK: {domain} -> {ip}")
+                print(f"Thành công: {domain} -> {ip}")
             except Exception:
-                # Nếu domain lỗi (như testhethong111.com), bỏ qua và chạy tiếp
-                print(f"Skip: {domain} không có IP")
+                # Bỏ qua các domain lỗi hoặc không tồn tại
                 continue
 
-        # 3. Lưu file (Loại bỏ các IP trùng lặp)
+        # 3. Loại bỏ trùng lặp và sắp xếp
         final_ips = sorted(list(set(ip_results)))
+        
+        # Ghi file
         with open("dns_VN.txt", "w", encoding="utf-8") as f:
             for ip in final_ips:
                 f.write(f"{ip}\n")
@@ -37,4 +39,6 @@ def main():
 
     except Exception as e:
         print(f"Lỗi hệ thống: {e}")
-        # Không dùng exit(1) ở đây để GitHub Action không báo đỏ nếu chỉ là lỗi mạng nhẹ
+
+if __name__ == "__main__":
+    main()
