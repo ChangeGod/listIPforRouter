@@ -1,26 +1,45 @@
 import requests
+import socket
 
-# Link nguồn bạn đã cung cấp
-SOURCE_URL = "https://raw.githubusercontent.com/ChangeGod/listIPforRouter/refs/heads/main/FWVietNam"
+# Link chứa danh sách Domain của bạn
+SOURCE_URL = "https://raw.githubusercontent.com"
+
+def get_ip(domain):
+    try:
+        # Thực hiện phân giải tên miền sang IP
+        return socket.gethostbyname(domain.strip())
+    except:
+        return None
 
 def main():
     try:
-        print(f"Đang tải dữ liệu từ {SOURCE_URL}...")
+        print(f"Đang tải danh sách domain từ {SOURCE_URL}...")
         response = requests.get(SOURCE_URL)
-        response.raise_for_status() # Kiểm tra lỗi kết nối
+        response.raise_for_status()
         
-        # Lọc danh sách: bỏ khoảng trắng và dòng trống
-        dns_list = [line.strip() for line in response.text.splitlines() if line.strip()]
-        
-        # Lưu vào file dns_VN.txt (Khớp với lệnh git add trong YAML)
+        domains = [line.strip() for line in response.text.splitlines() if line.strip()]
+        ip_list = []
+
+        print(f"Đang phân giải {len(domains)} tên miền...")
+        for domain in domains:
+            ip = get_ip(domain)
+            if ip:
+                ip_list.append(ip)
+                print(f"Thành công: {domain} -> {ip}")
+            else:
+                print(f"Thất bại: Không thể tìm IP cho {domain}")
+
+        # Loại bỏ các IP trùng lặp
+        unique_ips = sorted(list(set(ip_list)))
+
         with open("dns_VN.txt", "w", encoding="utf-8") as f:
-            for dns in dns_list:
-                f.write(f"{dns}\n")
+            for ip in unique_ips:
+                f.write(f"{ip}\n")
         
-        print(f"Thành công! Đã lưu {len(dns_list)} dòng vào dns_VN.txt")
+        print(f"Hoàn thành! Đã lưu {len(unique_ips)} IP vào dns_VN.txt")
     except Exception as e:
-        print(f"Lỗi khi xử lý: {e}")
-        exit(1) # Báo lỗi để GitHub Action dừng lại nếu thất bại
+        print(f"Lỗi hệ thống: {e}")
+        exit(1)
 
 if __name__ == "__main__":
     main()
