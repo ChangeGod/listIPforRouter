@@ -8,19 +8,15 @@ SOURCE_URL = "https://raw.githubusercontent.com/ChangeGod/listIPforRouter/refs/h
 def clean_domain(text):
     text = text.strip().lower()
     
-    # 1. Giải mã các ký tự bị mã hóa (%3A thành :, %2F thành /...)
+    # Giải mã các ký tự bị mã hóa (%3A, %2F...)
     text = urllib.parse.unquote(text)
     
-    # 2. Dùng Regex để "gắp" chính xác tên miền
-    # Loại bỏ các tiền tố http://, https:// và các tham số nhiễu phía sau như &h=...
+    # Dùng Regex để gắp chính xác tên miền
     match = re.search(r'(?:https?://)?([a-z0-9.-]+\.[a-z]{2,})', text)
-    
     if match:
         domain = match.group(1)
-        # Bỏ qua các giá trị không phải domain hợp lệ (ví dụ thuần số/IP hoặc rỗng)
         if not re.match(r'^[0-9.]+$', domain):
             return domain
-            
     return ""
 
 def get_ips(domain):
@@ -30,7 +26,7 @@ def get_ips(domain):
         for item in addr_info:
             ips.add(item[4][0])
     except Exception as e:
-        # Giữ lại thông báo lỗi để bạn biết domain nào thực sự "chết"
+        # Vẫn in ra log để theo dõi nguyên nhân cụ thể
         print(f"[!] Lỗi phân giải [{domain}]: {e}")
     return ips
 
@@ -43,34 +39,47 @@ def main():
         lines = [l.strip() for l in response.text.splitlines() if l.strip() and not l.startswith('#')]
         
         ip_map = {}
+        failed_domains = set() # Danh sách chứa các domain không có IP
+        
         print(f"Đang xử lý {len(lines)} dòng từ danh sách gốc...\n")
 
         for line in lines:
-            # Chỉ lấy domain/subdomain có sẵn trong file, đã được làm sạch
             domain = clean_domain(line)
             if not domain: continue
             
             found_ips = get_ips(domain)
-            for ip in found_ips:
-                if ip in ip_map:
-                    if domain not in ip_map[ip]:
-                        ip_map[ip] += f", {domain}"
-                else:
-                    ip_map[ip] = domain
-                print(f"[+] Thành công: {domain} -> {ip}")
+            
+            # Phân loại: Có IP thì đưa vào ip_map, Không có IP thì đưa vào failed_domains
+            if not found_ips:
+                failed_domains.add(domain)
+            else:
+                for ip in found_ips:
+                    if ip in ip_map:
+                        if domain not in ip_map[ip]:
+                            ip_map[ip] += f", {domain}"
+                    else:
+                        ip_map[ip] = domain
+                    print(f"[+] Thành công: {domain} -> {ip}")
 
         print("-" * 30)
         
-        if not ip_map:
-            print("[-] Không tìm thấy IP nào. File dns_VN.txt sẽ không bị ghi đè.")
-            print('=> Nguyên nhân có thể do DNS chặn, hoặc các tên miền đã "chết".')
+        if not ip_map and not failed_domains:
+            print("[-] Không có dữ liệu để xử lý. File dns_VN.txt sẽ không bị ghi đè.")
             return
 
         with open("dns_VN.txt", "w", encoding="utf-8") as f:
+            # 1. Ghi danh sách các IP thành công trước (đã được sắp xếp theo IP)
             for ip in sorted(ip_map.keys()):
                 f.write(f"{ip} # {ip_map[ip]}\n")
+            
+            # 2. Ghi danh sách các domain thất bại ở cuối file (Sắp xếp theo A-Z)
+            if failed_domains:
+                f.write("\n# --- CÁC DOMAIN KHÔNG LẤY ĐƯỢC IP (ĐÃ CHẾT HOẶC LỖI DNS) ---\n")
+                for d in sorted(failed_domains):
+                    f.write(f"# {d}\n")
         
-        print(f"[v] Hoàn thành! Đã lưu {len(ip_map)} IP vào file dns_VN.txt.")
+        print(f"[v] Hoàn thành! Đã lưu {len(ip_map)} IP thành công.")
+        print(f"[v] Đã ghi nhận {len(failed_domains)} domain lỗi ở cuối file.")
 
     except Exception as e:
         print(f"[x] Lỗi hệ thống: {e}")
