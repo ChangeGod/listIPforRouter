@@ -8,16 +8,16 @@ def clean_domain(text):
     # Loại bỏ khoảng trắng 2 đầu và chuyển thành chữ thường
     text = text.strip().lower()
     
-    # Nếu dòng có chứa dấu cách (ví dụ: "0.0.0.0 opstream90.com"), lấy phần tử cuối cùng
+    # Nếu dòng có chứa dấu cách, lấy phần tử cuối cùng
     text = text.split()[-1] 
     
     # Loại bỏ http://, https://
     text = re.sub(r'^https?://', '', text)
     
-    # Loại bỏ các path phía sau (ví dụ: domain.com/path -> domain.com)
+    # Loại bỏ các path phía sau 
     text = text.split('/')[0]
     
-    # Loại bỏ port nếu có (ví dụ: domain.com:8080 -> domain.com)
+    # Loại bỏ port nếu có
     text = text.split(':')[0]
     
     return text
@@ -25,18 +25,16 @@ def clean_domain(text):
 def get_ips(domain):
     ips = set()
     try:
-        # Lấy tất cả IPv4 của domain (đặc biệt quan trọng với Cloudflare)
         addr_info = socket.getaddrinfo(domain, 80, socket.AF_INET)
         for item in addr_info:
             ips.add(item[4][0])
     except Exception as e:
-        # IN LỖI RA LOG: Giúp ta biết chính xác tại sao không tìm thấy IP
+        # IN LỖI RA LOG
         print(f"[!] Lỗi phân giải [{domain}]: {e}")
     return ips
 
 def main():
     try:
-        # Thêm User-Agent đầy đủ hơn để tránh bị server nguồn chặn
         headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'}
         response = requests.get(SOURCE_URL, headers=headers, timeout=15)
         response.raise_for_status()
@@ -63,10 +61,10 @@ def main():
         
         if not ip_map:
             print("[-] Không tìm thấy IP nào. File dns_VN.txt sẽ không bị ghi đè.")
-            print("=> Nguyên nhân có thể do DNS của GitHub Actions chặn, hoặc các tên miền đã "chết".")
+            # Đã sửa lỗi ngoặc kép ở dòng dưới đây:
+            print('=> Nguyên nhân có thể do DNS của GitHub Actions chặn, hoặc các tên miền đã "chết".')
             return
 
-        # Sắp xếp theo IP để file đẹp hơn
         with open("dns_VN.txt", "w", encoding="utf-8") as f:
             for ip in sorted(ip_map.keys()):
                 f.write(f"{ip} # {ip_map[ip]}\n")
