@@ -5,22 +5,22 @@ import re
 SOURCE_URL = "https://raw.githubusercontent.com/ChangeGod/listIPforRouter/refs/heads/main/FWVietNam"
 
 def clean_domain(text):
-    # Loại bỏ khoảng trắng, protocol, và phần sau dấu gạch chéo
+    # Loại bỏ protocol, khoảng trắng và các ký tự lạ
     text = text.strip().lower()
     text = re.sub(r'^https?://', '', text)
     text = text.split('/')[0]
     return text
 
-def get_all_ips(domain):
+def get_ips(domain):
     ips = set()
     try:
-        # Lấy tất cả các bản ghi IPv4 (AF_INET)
-        results = socket.getaddrinfo(domain, 80, socket.AF_INET)
-        for item in results:
-            ips.add(item[4][0]) # Trích xuất địa chỉ IP
-    except Exception as e:
-        print(f"Lỗi phân giải {domain}: {e}")
-    return list(ips)
+        # Lấy tất cả IPv4 của domain (đặc biệt quan trọng với Cloudflare)
+        addr_info = socket.getaddrinfo(domain, 80, socket.AF_INET)
+        for item in addr_info:
+            ips.add(item[4][0])
+    except Exception:
+        pass
+    return ips
 
 def main():
     try:
@@ -28,16 +28,16 @@ def main():
         response = requests.get(SOURCE_URL, headers=headers, timeout=15)
         response.raise_for_status()
         
-        raw_lines = [line.strip() for line in response.text.splitlines() if line.strip() and not line.startswith('#')]
+        lines = [l.strip() for l in response.text.splitlines() if l.strip() and not l.startswith('#')]
         
         ip_map = {}
-        print(f"Tìm thấy {len(raw_lines)} domain. Đang xử lý...")
+        print(f"Đang xử lý {len(lines)} domain...")
 
-        for line in raw_lines:
+        for line in lines:
             domain = clean_domain(line)
             if not domain: continue
             
-            found_ips = get_all_ips(domain)
+            found_ips = get_ips(domain)
             for ip in found_ips:
                 if ip in ip_map:
                     if domain not in ip_map[ip]:
@@ -47,14 +47,15 @@ def main():
                 print(f"Thành công: {domain} -> {ip}")
 
         if not ip_map:
-            print("CẢNH BÁO: Không tìm thấy IP nào!")
+            print("Không tìm thấy IP nào. File dns_VN.txt sẽ không bị ghi đè.")
             return
 
+        # Sắp xếp theo IP để file đẹp hơn
         with open("dns_VN.txt", "w", encoding="utf-8") as f:
             for ip in sorted(ip_map.keys()):
                 f.write(f"{ip} # {ip_map[ip]}\n")
         
-        print(f"Hoàn thành! Đã lưu {len(ip_map)} IP vào dns_VN.txt")
+        print(f"Hoàn thành! Đã lưu {len(ip_map)} IP.")
 
     except Exception as e:
         print(f"Lỗi hệ thống: {e}")
