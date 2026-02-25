@@ -18,7 +18,7 @@ jobs:
         run: pip install requests
 
       - name: Chạy script xử lý
-        run: z_code_process_dns.py
+        run: python z_code_process_dns.py
 
       - name: Lưu file vào Repo
         run: |
