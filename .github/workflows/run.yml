@@ -1,54 +1,50 @@
 name: Auto Process DNS
 
 on:
-  workflow_dispatch: # Cho phép bấm chạy thủ công từ tab Actions
+  workflow_dispatch:
   schedule:
-    - cron: '0 */6 * * *' # Tự động chạy mỗi 6 tiếng
+    - cron: '0 */6 * * *'
 
 jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: write # Cấp quyền ghi để cập nhật file vào repo
+      contents: write
 
     steps:
       - name: Checkout mã nguồn
-        uses: actions/checkout@v4 # Cập nhật version mới nhất
+        uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # Lấy toàn bộ lịch sử để xử lý đồng bộ
+          fetch-depth: 0
 
       - name: Cài đặt Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
 
-      - name: Cài đặt thư viện requests
+      - name: Cài đặt thư viện
         run: pip install requests
 
-      - name: Chạy script xử lý DNS
+      - name: Chạy script xử lý
         run: python z_code_process_dns.py
 
-      - name: Lưu file vào Repo (Xử lý chống xung đột)
+      - name: Lưu file vào Repo
         run: |
-          # Thiết lập danh tính Git
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
 
-          # 1. Cập nhật trạng thái mới nhất từ server
-          git fetch origin main
-
-          # 2. Đồng bộ hóa máy ảo với server (nhưng vẫn giữ file dns_VN.txt mới tạo)
-          # Lệnh này giúp xóa bỏ hoàn toàn khả năng bị "Merge Conflict"
-          git reset --soft origin main
-
-          # 3. Đưa file mới vào vùng chờ
+          # Thêm file vào stage trước
           git add dns_VN.txt
 
-          # 4. Kiểm tra xem file dns_VN.txt thực sự có thay đổi nội dung không
+          # Chỉ xử lý nếu có sự thay đổi
           if git diff --staged --quiet; then
-            echo "Không có thay đổi về IP, bỏ qua commit."
+            echo "Không có thay đổi nào mới."
           else
-            # 5. Commit và ép đẩy lên server
+            # Commit thay đổi
             git commit -m "Cập nhật list DNS: $(date +'%d-%m-%Y %H:%M')"
+            
+            # Kéo và đẩy dữ liệu một cách an toàn
+            # Sử dụng --rebase và chỉ định rõ nhánh để tránh lỗi ambiguous
+            git pull --rebase origin main
             git push origin main
           fi
