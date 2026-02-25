@@ -30,17 +30,21 @@ jobs:
 
       - name: Lưu file vào Repo
         run: |
+          # Cấu hình danh tính
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
 
-          git add dns_VN.txt
+          # Đảm bảo đang ở đúng nhánh main để tránh lỗi 'ambiguous'
+          git checkout main || git checkout -b main
 
-          # Chỉ commit nếu file thực sự thay đổi nội dung
+          # Kiểm tra thay đổi
+          git add dns_VN.txt
           if git diff --staged --quiet; then
-            echo "Không có thay đổi nào để cập nhật."
+            echo "Không có thay đổi nào mới."
           else
-            git commit -m "Cập nhật IP: $(date +'%Y-%m-%d %H:%M')"
-            # Kéo về trước để tránh lỗi rejected, sau đó push
-            git pull origin main --rebase
-            git push origin HEAD:main
+            git commit -m "Cập nhật IP: $(date +'%d-%m-%Y %H:%M')"
+            
+            # Sử dụng cú pháp push tường minh để tránh nhầm lẫn 'origin'
+            # Cấu trúc: git push <URL_remote> <nhánh_local>:<nhánh_remote>
+            git push "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" main:main
           fi
