@@ -35,8 +35,8 @@ def main():
         lines = [l.strip() for l in response.text.splitlines() if l.strip() and not l.startswith('#')]
         
         ip_map = {}
-        success_domains = set() # Danh sách lưu các domain đã lấy được IP
-        failed_lines = set()    # Danh sách lưu các link gốc bị lỗi
+        success_domains = set() 
+        failed_lines = set()    
         
         print(f"Đang xử lý {len(lines)} dòng từ danh sách gốc...\n")
 
@@ -47,12 +47,9 @@ def main():
             found_ips = get_ips(domain)
             
             if not found_ips:
-                # Không có IP -> đưa link gốc vào danh sách lỗi
                 failed_lines.add(line)
             else:
-                # Có IP -> Đưa domain vào danh sách thành công
                 success_domains.add(domain)
-                # Cập nhật vào bản đồ IP
                 for ip in found_ips:
                     if ip in ip_map:
                         if domain not in ip_map[ip]:
@@ -68,70 +65,24 @@ def main():
             return
 
         with open("dns_VN.txt", "w", encoding="utf-8") as f:
-            # --- PHẦN 1: Danh sách IP và Domain (Trên cùng) ---
+            # 1. Danh sách IP # Domain (Trên cùng)
             for ip in sorted(ip_map.keys()):
                 f.write(f"{ip} # {ip_map[ip]}\n")
             
-            # --- PHẦN 2: Bản copy các domain thành công (Ở giữa) ---
+            # 2. Bản copy các domain thành công (Ở giữa)
             if success_domains:
                 f.write("\n# --- DANH SÁCH DOMAIN ĐÃ TẠO RA IP ---\n")
                 for d in sorted(success_domains):
                     f.write(f"{d}\n")
             
-            # --- PHẦN 3: Các link lỗi với ký hiệu # ở cuối (Dưới cùng) ---
+            # 3. Các link lỗi thêm dấu # ở cuối (Dưới cùng)
             if failed_lines:
                 f.write("\n# --- CÁC TRANG QUÉT BỊ LỖI (KHÔNG CÓ IP) ---\n")
                 for original_line in sorted(failed_lines):
-                    f.write(f"{original_line}#\n") # Thêm dấu # ở ngay đuôi
+                    f.write(f"{original_line}#\n")
         
         print(f"[v] Hoàn thành! Đã lưu {len(ip_map)} IP thành công.")
         print(f"[v] Đã ghi nhận {len(failed_lines)} dòng lỗi ở cuối file.")
-
-    except Exception as e:
-        print(f"[x] Lỗi hệ thống: {e}")
-
-if __name__ == "__main__":
-    main()
-        ip_map = {}
-        failed_lines = set() 
-        
-        print(f"Đang xử lý {len(lines)} dòng từ danh sách gốc...\n")
-
-        for line in lines:
-            domain = clean_domain(line)
-            if not domain: continue
-            
-            found_ips = get_ips(domain)
-            
-            if not found_ips:
-                failed_lines.add(line)
-            else:
-                for ip in found_ips:
-                    if ip in ip_map:
-                        if domain not in ip_map[ip]:
-                            ip_map[ip] += f", {domain}"
-                    else:
-                        ip_map[ip] = domain
-                    print(f"[+] Thành công: {domain} -> {ip}")
-
-        print("-" * 30)
-        
-        if not ip_map and not failed_lines:
-            print("[-] Không có dữ liệu để xử lý. File dns_VN.txt sẽ không bị ghi đè.")
-            return
-
-        with open("dns_VN.txt", "w", encoding="utf-8") as f:
-            for ip in sorted(ip_map.keys()):
-                f.write(f"{ip} # {ip_map[ip]}\n")
-            
-            if failed_lines:
-                f.write("\n# --- CÁC DOMAIN KHÔNG LẤY ĐƯỢC IP (ĐÃ CHẾT HOẶC LỖI DNS) ---\n")
-                for original_line in sorted(failed_lines):
-                    # Đã gỡ bỏ dấu "#" ở đây, in ra nguyên bản raw link
-                    f.write(f"{original_line}\n")
-        
-        print(f"[v] Hoàn thành! Đã lưu {len(ip_map)} IP thành công.")
-        print(f"[v] Đã ghi nhận {len(failed_lines)} dòng raw lỗi ở cuối file.")
 
     except Exception as e:
         print(f"[x] Lỗi hệ thống: {e}")
