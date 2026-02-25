@@ -33,18 +33,14 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
 
-          # Thêm file vào vùng chờ
           git add dns_VN.txt
 
-          # Kiểm tra xem thực sự có thay đổi nội dung không
+          # Chỉ commit nếu file thực sự thay đổi nội dung
           if git diff --staged --quiet; then
             echo "Không có thay đổi nào để cập nhật."
           else
-            git commit -m "Cập nhật list DNS: $(date +'%d-%m-%Y %H:%M')"
-            
-            # Kéo dữ liệu mới nhất về trước để tránh xung đột
+            git commit -m "Cập nhật IP: $(date +'%Y-%m-%d %H:%M')"
+            # Kéo về trước để tránh lỗi rejected, sau đó push
             git pull origin main --rebase
-            
-            # Đẩy lên nhánh main một cách tường minh
             git push origin HEAD:main
           fi
