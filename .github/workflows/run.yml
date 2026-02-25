@@ -24,6 +24,6 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add dns_VN.txt
+          git add dns_VN_test.txt
           git commit -m "Cập nhật list DNS" || echo "No changes"
           git push
