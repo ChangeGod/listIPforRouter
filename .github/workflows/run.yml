@@ -1,9 +1,9 @@
 name: Auto Process DNS
 
 on:
-  workflow_dispatch:
+  workflow_dispatch: # Cho phép bấm chạy thủ công
   schedule:
-    - cron: '0 */6 * * *'
+    - cron: '0 */6 * * *' # Chạy mỗi 6 tiếng
 
 jobs:
   build:
@@ -22,6 +22,9 @@ jobs:
         with:
           python-version: '3.10'
 
+      - name: Cài đặt thư viện requests
+        run: pip install requests
+
       - name: Chạy script xử lý
         run: python z_code_process_dns.py
 
@@ -30,12 +33,13 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           
-          # Kiểm tra xem file có thay đổi không
           git add dns_VN.txt
+          
+          # Kiểm tra nếu có thay đổi thì mới commit
           if git diff --staged --quiet; then
-            echo "Không có thay đổi nào mới về IP."
+            echo "Không có IP mới nào được tìm thấy."
           else
-            # Pull trước khi push để tránh lỗi out-of-date
+            # Tránh xung đột bằng cách pull trước khi push
             git pull origin main --rebase
             git commit -m "Cập nhật danh sách IP: $(date +'%d-%m-%Y %H:%M')"
             git push origin main
