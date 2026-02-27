@@ -36,24 +36,21 @@
 151.101.194.219 # speedtest.net
 151.101.2.219 # speedtest.net
 151.101.66.219 # speedtest.net
-156.238.215.165 # vip.opstream10.com
-156.238.215.174 # vip.opstream90.com
-156.238.215.181 # vip.opstream8.com, vip.opstream14.com, vip.opstream16.com, vip.opstream17.com
+156.238.215.165 # vip.opstream10.com, vip.opstream90.com
+156.238.215.181 # vip.opstream8.com, vip.opstream13.com, vip.opstream14.com, vip.opstream16.com, vip.opstream17.com
 156.238.215.182 # vip.opstream8.com, vip.opstream13.com, vip.opstream14.com, vip.opstream16.com, vip.opstream17.com
 156.238.215.189 # vip.opstream11.com, vip.opstream12.com, vip.opstream15.com
 156.238.215.190 # vip.opstream11.com, vip.opstream12.com, vip.opstream15.com
-156.238.215.198 # vip.opstream10.com, vip.opstream90.com
+156.238.215.197 # vip.opstream10.com, vip.opstream90.com
 156.238.215.205 # vip.opstream11.com, vip.opstream12.com, vip.opstream15.com
 156.238.215.206 # vip.opstream11.com, vip.opstream12.com, vip.opstream15.com
-156.238.221.141 # vip.opstream10.com
-156.238.221.142 # vip.opstream90.com
-156.238.221.222 # vip.opstream90.com
-156.238.221.229 # vip.opstream10.com
+156.238.221.134 # vip.opstream90.com
 156.238.221.230 # vip.opstream10.com
-156.238.221.37 # vip.opstream8.com, vip.opstream13.com, vip.opstream14.com, vip.opstream16.com, vip.opstream17.com
-156.238.221.38 # vip.opstream8.com, vip.opstream13.com, vip.opstream16.com, vip.opstream17.com
+156.238.221.37 # vip.opstream8.com, vip.opstream16.com, vip.opstream17.com
+156.238.221.38 # vip.opstream13.com, vip.opstream14.com, vip.opstream17.com
 156.238.221.45 # vip.opstream8.com, vip.opstream13.com, vip.opstream14.com, vip.opstream16.com, vip.opstream17.com
-156.238.221.46 # vip.opstream13.com, vip.opstream14.com
+156.238.221.46 # vip.opstream8.com, vip.opstream13.com, vip.opstream14.com, vip.opstream16.com
+156.238.221.5 # vip.opstream10.com, vip.opstream90.com
 156.59.142.22 # tv360.vn
 156.59.143.203 # tv360.vn
 156.59.143.243 # tv360.vn
@@ -83,15 +80,15 @@
 176.97.118.23 # trivonix.top
 210.211.107.70 # live.fptplay53.net
 212.102.35.236 # ip.me
-216.198.79.195 # zaltv.vercel.app
+216.198.79.131 # zaltv.vercel.app
 23.239.16.110 # dnsleaktest.com
-3.162.125.19 # prd.jwpltx.com
-3.162.125.2 # prd.jwpltx.com
-3.162.125.54 # prd.jwpltx.com
-3.162.125.59 # prd.jwpltx.com
-37.77.87.222 # vip.opstream90.com
-42.1.110.85 # z215ymcm4tliv.vcdn.cloud
-64.29.17.195 # zaltv.vercel.app
+37.77.87.221 # vip.opstream10.com, vip.opstream90.com
+42.1.110.86 # z215ymcm4tliv.vcdn.cloud
+64.29.17.131 # zaltv.vercel.app
+65.8.54.113 # prd.jwpltx.com
+65.8.54.36 # prd.jwpltx.com
+65.8.54.86 # prd.jwpltx.com
+65.8.54.91 # prd.jwpltx.com
 71.18.82.242 # tv360.vn
 95.85.16.212 # ipleak.net
 
