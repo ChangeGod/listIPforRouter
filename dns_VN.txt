@@ -1,7 +1,7 @@
 104.20.16.252 # missav.ai
 104.20.39.193 # sunraycloud64.online
 104.21.27.2 # robong.me
-104.21.36.21 # hoiquan.click
+104.21.36.21 # hoiquan.click, xem.hoiquan.click
 104.21.38.34 # werox88.xyz
 104.21.55.247 # zaltv.cf
 104.21.62.104 # hentaivnx.com
@@ -33,26 +33,23 @@
 151.101.194.219 # speedtest.net
 151.101.2.219 # speedtest.net
 151.101.66.219 # speedtest.net
-156.238.215.166 # vip.opstream90.com
-156.238.215.174 # vip.opstream10.com
+156.238.215.165 # vip.opstream90.com
+156.238.215.166 # vip.opstream10.com
+156.238.215.174 # vip.opstream90.com
 156.238.215.181 # vip.opstream8.com, vip.opstream13.com, vip.opstream14.com, vip.opstream16.com, vip.opstream17.com
-156.238.215.182 # vip.opstream8.com, vip.opstream13.com, vip.opstream14.com, vip.opstream16.com, vip.opstream17.com
+156.238.215.182 # vip.opstream16.com
 156.238.215.189 # vip.opstream11.com, vip.opstream12.com, vip.opstream15.com
 156.238.215.190 # vip.opstream11.com, vip.opstream12.com, vip.opstream15.com
+156.238.215.198 # vip.opstream10.com
 156.238.215.205 # vip.opstream11.com, vip.opstream12.com, vip.opstream15.com
 156.238.215.206 # vip.opstream11.com, vip.opstream12.com, vip.opstream15.com
-156.238.221.133 # vip.opstream90.com
-156.238.221.134 # vip.opstream10.com
-156.238.221.142 # vip.opstream90.com
-156.238.221.221 # vip.opstream90.com
-156.238.221.235 # vip.opstream10.com
-156.238.221.236 # vip.opstream90.com
+156.238.221.134 # vip.opstream90.com
+156.238.221.235 # vip.opstream10.com, vip.opstream90.com
 156.238.221.37 # vip.opstream8.com, vip.opstream13.com, vip.opstream14.com, vip.opstream16.com, vip.opstream17.com
-156.238.221.38 # vip.opstream13.com, vip.opstream17.com
-156.238.221.45 # vip.opstream8.com, vip.opstream13.com, vip.opstream14.com, vip.opstream16.com
-156.238.221.46 # vip.opstream8.com, vip.opstream14.com, vip.opstream16.com, vip.opstream17.com
-156.238.221.5 # vip.opstream10.com
-156.238.221.6 # vip.opstream10.com
+156.238.221.38 # vip.opstream8.com, vip.opstream13.com, vip.opstream14.com, vip.opstream16.com, vip.opstream17.com
+156.238.221.45 # vip.opstream8.com, vip.opstream13.com, vip.opstream14.com, vip.opstream17.com
+156.238.221.46 # vip.opstream8.com, vip.opstream13.com, vip.opstream14.com, vip.opstream16.com, vip.opstream17.com
+156.238.221.5 # vip.opstream10.com, vip.opstream90.com
 156.59.142.22 # tv360.vn
 156.59.143.203 # tv360.vn
 156.59.143.243 # tv360.vn
@@ -64,13 +61,12 @@
 171.244.54.116 # seenow.vn
 172.234.24.211 # owakshina.store
 172.239.57.117 # owakshina.store
-172.64.80.1 # xem.hoiquan.click
 172.66.153.115 # sunraycloud64.online
 172.66.173.34 # missav.ai
 172.67.139.196 # robong.me
 172.67.162.99 # zaltv.gq
 172.67.174.207 # zaltv.cf
-172.67.183.214 # hoiquan.click
+172.67.183.214 # hoiquan.click, xem.hoiquan.click
 172.67.218.78 # werox88.xyz
 172.67.222.214 # hentaivnx.com
 172.67.68.6 # p1.spexliu.top
@@ -81,16 +77,17 @@
 172.67.75.111 # sextop1.movie
 172.67.75.34 # goatembed.com
 176.97.118.23 # trivonix.top
+18.238.152.17 # prd.jwpltx.com
+18.238.152.2 # prd.jwpltx.com
+18.238.152.63 # prd.jwpltx.com
+18.238.152.87 # prd.jwpltx.com
 210.211.107.70 # live.fptplay53.net
 212.102.35.236 # ip.me
-216.198.79.195 # zaltv.vercel.app
+216.198.79.131 # zaltv.vercel.app
 23.239.16.110 # dnsleaktest.com
-3.169.149.117 # prd.jwpltx.com
-3.169.149.128 # prd.jwpltx.com
-3.169.149.28 # prd.jwpltx.com
-3.169.149.60 # prd.jwpltx.com
-42.1.110.88 # z215ymcm4tliv.vcdn.cloud
-64.29.17.195 # zaltv.vercel.app
+37.77.87.222 # vip.opstream10.com
+42.1.110.92 # z215ymcm4tliv.vcdn.cloud
+64.29.17.131 # zaltv.vercel.app
 71.18.82.242 # tv360.vn
 95.85.16.212 # ipleak.net
 
