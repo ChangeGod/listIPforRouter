@@ -29,6 +29,10 @@
 104.26.9.190 # sextop1.movie
 104.26.9.32 # sextop1.page
 104.26.9.96 # goatembed.com
+108.139.10.26 # prd.jwpltx.com
+108.139.10.41 # prd.jwpltx.com
+108.139.10.90 # prd.jwpltx.com
+108.139.10.92 # prd.jwpltx.com
 123.29.76.174 # s76174.cdn.mytvnet.vn
 123.30.151.125 # tuoitre.vn
 14.225.10.24 # tuoitre.vn
@@ -36,8 +40,6 @@
 142.171.123.133 # dpdns.org
 149.104.101.37 # tv360.vn
 149.104.101.38 # tv360.vn
-149.104.101.42 # live.fptplay53.net
-149.104.101.43 # live.fptplay53.net
 149.104.81.34 # tv360.vn
 149.104.81.35 # tv360.vn
 151.101.130.219 # speedtest.net
@@ -45,20 +47,20 @@
 151.101.2.219 # speedtest.net
 151.101.66.219 # speedtest.net
 156.238.215.165 # vip.opstream10.com
-156.238.215.181 # vip.opstream13.com, vip.opstream14.com, vip.opstream16.com
-156.238.215.182 # vip.opstream8.com, vip.opstream13.com, vip.opstream16.com, vip.opstream17.com
+156.238.215.173 # vip.opstream10.com
+156.238.215.181 # vip.opstream8.com, vip.opstream13.com, vip.opstream14.com, vip.opstream16.com, vip.opstream17.com
+156.238.215.182 # vip.opstream8.com, vip.opstream13.com, vip.opstream14.com, vip.opstream16.com, vip.opstream17.com
 156.238.215.189 # vip.opstream11.com, vip.opstream12.com, vip.opstream15.com
 156.238.215.190 # vip.opstream11.com, vip.opstream12.com, vip.opstream15.com
 156.238.215.205 # vip.opstream11.com, vip.opstream12.com, vip.opstream15.com
 156.238.215.206 # vip.opstream11.com, vip.opstream12.com, vip.opstream15.com
-156.238.221.141 # vip.opstream10.com
-156.238.221.142 # vip.opstream10.com
 156.238.221.221 # vip.opstream10.com
-156.238.221.235 # vip.opstream10.com
-156.238.221.37 # vip.opstream8.com, vip.opstream14.com, vip.opstream17.com
-156.238.221.38 # vip.opstream8.com, vip.opstream13.com, vip.opstream14.com, vip.opstream16.com, vip.opstream17.com
-156.238.221.45 # vip.opstream8.com, vip.opstream13.com, vip.opstream14.com, vip.opstream16.com, vip.opstream17.com
-156.238.221.46 # vip.opstream8.com, vip.opstream13.com, vip.opstream14.com, vip.opstream16.com, vip.opstream17.com
+156.238.221.245 # vip.opstream10.com
+156.238.221.246 # vip.opstream10.com
+156.238.221.37 # vip.opstream8.com, vip.opstream13.com, vip.opstream14.com, vip.opstream16.com, vip.opstream17.com
+156.238.221.38 # vip.opstream8.com, vip.opstream13.com, vip.opstream16.com, vip.opstream17.com
+156.238.221.45 # vip.opstream8.com, vip.opstream13.com, vip.opstream14.com, vip.opstream16.com
+156.238.221.46 # vip.opstream14.com, vip.opstream17.com
 156.59.142.22 # tv360.vn
 156.59.143.203 # tv360.vn
 156.59.143.243 # tv360.vn
@@ -94,15 +96,12 @@
 172.67.75.111 # sextop1.movie
 172.67.75.34 # goatembed.com
 176.97.118.23 # trivonix.top
+210.211.107.70 # live.fptplay53.net
 212.102.35.236 # ip.me
-216.198.79.67 # zaltv.vercel.app
+216.198.79.3 # zaltv.vercel.app
 23.239.16.110 # dnsleaktest.com
-3.175.34.100 # prd.jwpltx.com
-3.175.34.39 # prd.jwpltx.com
-3.175.34.45 # prd.jwpltx.com
-3.175.34.63 # prd.jwpltx.com
-42.1.110.88 # z215ymcm4tliv.vcdn.cloud
-64.29.17.67 # zaltv.vercel.app
+42.1.110.89 # z215ymcm4tliv.vcdn.cloud
+64.29.17.3 # zaltv.vercel.app
 71.18.82.242 # tv360.vn
 95.85.16.212 # ipleak.net
 
