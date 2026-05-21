@@ -47,10 +47,10 @@
 151.101.66.219 # speedtest.net
 156.238.215.173 # vip.opstream11.com, vip.opstream12.com, vip.opstream15.com
 156.238.215.174 # vip.opstream11.com, vip.opstream12.com, vip.opstream15.com
-156.238.215.181 # vip.opstream8.com, vip.opstream13.com, vip.opstream14.com, vip.opstream17.com
-156.238.215.182 # vip.opstream8.com, vip.opstream16.com
+156.238.215.181 # vip.opstream8.com, vip.opstream13.com, vip.opstream14.com, vip.opstream16.com, vip.opstream17.com
+156.238.215.182 # vip.opstream8.com, vip.opstream13.com, vip.opstream17.com
 156.238.221.37 # vip.opstream8.com, vip.opstream13.com, vip.opstream14.com, vip.opstream16.com, vip.opstream17.com
-156.238.221.38 # vip.opstream8.com, vip.opstream13.com, vip.opstream14.com, vip.opstream16.com, vip.opstream17.com
+156.238.221.38 # vip.opstream8.com, vip.opstream14.com, vip.opstream16.com
 156.238.221.45 # vip.opstream13.com, vip.opstream14.com, vip.opstream16.com, vip.opstream17.com
 156.238.221.46 # vip.opstream8.com, vip.opstream13.com, vip.opstream14.com, vip.opstream16.com, vip.opstream17.com
 156.59.142.22 # tv360.vn
