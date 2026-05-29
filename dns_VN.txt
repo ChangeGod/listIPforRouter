@@ -26,10 +26,8 @@
 104.26.5.165 # elifros.top
 104.26.6.33 # vnsextop1.com
 104.26.7.33 # vnsextop1.com
-104.26.8.190 # sextop1.movie
 104.26.8.32 # sextop1.page
 104.26.8.96 # goatembed.com
-104.26.9.190 # sextop1.movie
 104.26.9.32 # sextop1.page
 104.26.9.96 # goatembed.com
 123.29.76.174 # s76174.cdn.mytvnet.vn
@@ -57,7 +55,7 @@
 172.234.26.134 # rophim.li
 172.236.114.191 # rophim.li
 172.238.172.46 # rophim.li
-172.64.80.1 # xem.hoiquan.click
+172.64.80.1 # xem.hoiquan.click, sextop1.movie
 172.66.153.115 # sunraycloud64.online
 172.66.173.34 # missav.ai
 172.67.139.196 # robong.me
@@ -77,13 +75,12 @@
 172.67.71.221 # elifros.top
 172.67.71.232 # rophimapi.net
 172.67.71.251 # sextop1.page
-172.67.75.111 # sextop1.movie
 172.67.75.34 # goatembed.com
 176.97.118.23 # trivonix.top
 205.234.175.175 # vip.opstream10.com
 210.211.107.70 # live.fptplay53.net
 212.102.35.236 # ip.me
-216.198.79.67 # zaltv.vercel.app
+216.198.79.131 # zaltv.vercel.app
 23.239.16.110 # dnsleaktest.com
 3.169.149.117 # prd.jwpltx.com
 3.169.149.128 # prd.jwpltx.com
@@ -91,17 +88,17 @@
 3.169.149.60 # prd.jwpltx.com
 37.77.87.221 # vip.opstream11.com, vip.opstream12.com, vip.opstream15.com
 37.77.87.222 # vip.opstream11.com, vip.opstream12.com, vip.opstream15.com
-42.1.110.89 # z215ymcm4tliv.vcdn.cloud
-64.29.17.67 # zaltv.vercel.app
+42.1.110.88 # z215ymcm4tliv.vcdn.cloud
+64.29.17.131 # zaltv.vercel.app
 71.18.82.242 # tv360.vn
-85.149.232.149 # vip.opstream8.com, vip.opstream14.com, vip.opstream16.com
+85.149.232.149 # vip.opstream8.com, vip.opstream14.com, vip.opstream16.com, vip.opstream17.com
 85.149.232.150 # vip.opstream8.com, vip.opstream13.com, vip.opstream14.com, vip.opstream16.com, vip.opstream17.com
-85.149.232.157 # vip.opstream8.com, vip.opstream13.com, vip.opstream14.com, vip.opstream17.com
+85.149.232.157 # vip.opstream13.com, vip.opstream14.com, vip.opstream16.com, vip.opstream17.com
 85.149.232.158 # vip.opstream8.com, vip.opstream13.com, vip.opstream14.com, vip.opstream16.com, vip.opstream17.com
 85.149.232.45 # vip.opstream11.com, vip.opstream12.com, vip.opstream15.com
 85.149.232.46 # vip.opstream11.com, vip.opstream12.com, vip.opstream15.com
-85.149.232.53 # vip.opstream13.com, vip.opstream16.com, vip.opstream17.com
-85.149.232.54 # vip.opstream8.com, vip.opstream13.com, vip.opstream14.com, vip.opstream16.com, vip.opstream17.com
+85.149.232.53 # vip.opstream8.com, vip.opstream13.com, vip.opstream14.com, vip.opstream17.com
+85.149.232.54 # vip.opstream8.com, vip.opstream13.com, vip.opstream16.com
 95.85.16.212 # ipleak.net
 
 # --- DANH SÁCH DOMAIN ĐÃ TẠO RA IP ---
